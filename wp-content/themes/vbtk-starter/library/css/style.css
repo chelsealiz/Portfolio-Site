@@ -1,0 +1,60 @@
+/*
+Error: File to import not found or unreadable: home/large.
+       Load paths:
+         /Users/chelsea/Documents/repos/Portfolio-Site/wp-content/themes/vbtk-starter/library/scss
+         /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/foundation/scss
+         /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/foundation-sites/scss
+         /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/foundation-sites
+         /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/motion-ui
+         Sass::Globbing::Importer
+        on line 69 of /Users/chelsea/Documents/repos/Portfolio-Site/wp-content/themes/vbtk-starter/library/scss/style.scss
+
+64: *\/
+65: @media #{$large-up}{
+66: 
+67: 	// styles in large.scss
+68: 	@import "large";
+69: 	@import "home/large";
+70: 
+71: } // end of media query
+72: 
+73: /*
+74: XLARGE
+
+Backtrace:
+/Users/chelsea/Documents/repos/Portfolio-Site/wp-content/themes/vbtk-starter/library/scss/style.scss:69
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/import_node.rb:67:in `rescue in import'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/import_node.rb:45:in `import'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/import_node.rb:28:in `imported_file'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:106:in `rescue in invalid_import_parent?'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:100:in `invalid_import_parent?'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:169:in `try_send'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:12:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `map'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:49:in `visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:38:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:15:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `map'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:49:in `visit_children'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:57:in `visit_root'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:36:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/check_nesting.rb:15:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/visitors/base.rb:24:in `visit'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/root_node.rb:35:in `css_tree'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/tree/root_node.rb:20:in `render'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/engine.rb:278:in `render'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/sass_scss.rb:423:in `run'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/base.rb:52:in `parse'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/lib/sass/exec/base.rb:19:in `parse!'
+/Applications/CodeKit.app/Contents/Resources/engines/scss/bin/scss:13:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: home/large.\A        Load paths:\A          /Users/chelsea/Documents/repos/Portfolio-Site/wp-content/themes/vbtk-starter/library/scss\A          /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/foundation/scss\A          /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/foundation-sites/scss\A          /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/foundation-sites\A          /Users/chelsea/Documents/repos/Portfolio-Site/bower_components/motion-ui\A          Sass::Globbing::Importer\A         on line 69 of /Users/chelsea/Documents/repos/Portfolio-Site/wp-content/themes/vbtk-starter/library/scss/style.scss\A \A 64: */\A 65: @media #{$large-up}{\A 66: \A 67: 	// styles in large.scss\A 68: 	@import \"large\";\A 69: 	@import \"home/large\";\A 70: \A 71: } // end of media query\A 72: \A 73: /*\A 74: XLARGE"; }
