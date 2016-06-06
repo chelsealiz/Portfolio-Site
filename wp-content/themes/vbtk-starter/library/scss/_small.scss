@@ -14,6 +14,16 @@ GENERAL STYLES
 *********************/
 body {}
 
+
+#main{
+	display:none;
+}
+
+
+$background: #ffffff;
+$headerBack:#000;
+$headertext:#fff;
+$blue:#FFF000;
 /********************
 WORDPRESS BODY CLASSES
 style a page via class
@@ -58,6 +68,8 @@ style a page via class
 /*********************
 LAYOUT & GRID STYLES
 *********************/
+
+
 
 /*********************
 LINK STYLES
@@ -129,8 +141,15 @@ HEADER STYLES
 *********************/
 
 .header {
+	background-color:$headerBack;
+	color:$headertext;
+
 	ul.off-canvas-list li {
 		list-style: none;
+	}
+
+	a{
+		color:$headertext;
 	}
 }
     
@@ -162,8 +181,10 @@ POSTS & CONTENT STYLES
 *********************/
 
 #content {
+
 	#inner-content {
-		padding: 1rem 0rem;
+		padding-right:10%;
+		padding-left:15%;
 	}
 }
 
@@ -631,6 +652,8 @@ SIDEBARS & ASIDES
 		color: #fff;
 	}	
 }
+
+
 /*********************
 FOOTER STYLES
 *********************/
