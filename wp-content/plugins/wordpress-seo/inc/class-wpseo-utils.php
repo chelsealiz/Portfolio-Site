@@ -17,6 +17,13 @@ class WPSEO_Utils {
 	public static $has_filters;
 
 	/**
+	 * Holds the options that, when updated, should cause the transient cache to clear
+	 *
+	 * @var array
+	 */
+	private static $cache_clear = array();
+
+	/**
 	 * Check whether the current user is allowed to access the configuration.
 	 *
 	 * @static
@@ -29,12 +36,15 @@ class WPSEO_Utils {
 		}
 
 		$options = get_site_option( 'wpseo_ms' );
-
-		if ( empty( $options['access'] ) || $options['access'] === 'admin' ) {
-			return current_user_can( 'manage_options' );
+		if ( $options['access'] === 'admin' && current_user_can( 'manage_options' ) ) {
+			return true;
 		}
 
-		return is_super_admin();
+		if ( $options['access'] === 'superadmin' && ! is_super_admin() ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -96,7 +106,9 @@ class WPSEO_Utils {
 	/**
 	 * Check whether a url is relative
 	 *
-	 * @param string $url URL string to check.
+	 * @static
+	 *
+	 * @param string $url
 	 *
 	 * @return bool
 	 */
@@ -128,7 +140,9 @@ class WPSEO_Utils {
 	 *
 	 * Replace line breaks, carriage returns, tabs with a space, then remove double spaces.
 	 *
-	 * @param string $string String input to standardize.
+	 * @static
+	 *
+	 * @param string $string
 	 *
 	 * @return string
 	 */
@@ -137,8 +151,7 @@ class WPSEO_Utils {
 	}
 
 	/**
-	 * First strip out registered and enclosing shortcodes using native WordPress strip_shortcodes function.
-	 * Then strip out the shortcodes with a filthy regex, because people don't properly register their shortcodes.
+	 * Strip out the shortcodes with a filthy regex, because people don't properly register their shortcodes.
 	 *
 	 * @static
 	 *
@@ -147,7 +160,7 @@ class WPSEO_Utils {
 	 * @return string $text string without shortcodes
 	 */
 	public static function strip_shortcode( $text ) {
-		return preg_replace( '`\[[^\]]+\]`s', '', strip_shortcodes( $text ) );
+		return preg_replace( '`\[[^\]]+\]`s', '', $text );
 	}
 
 	/**
@@ -182,13 +195,42 @@ class WPSEO_Utils {
 	 * @return string
 	 */
 	public static function translate_score( $val, $css_value = true ) {
-		$seo_rank = WPSEO_Rank::from_numeric_score( $val );
-
-		if ( $css_value ) {
-			return $seo_rank->get_css_class();
+		if ( $val > 10 ) {
+			$val = round( $val / 10 );
+		}
+		switch ( $val ) {
+			case 0:
+				$score = __( 'N/A', 'wordpress-seo' );
+				$css   = 'na';
+				break;
+			case 4:
+			case 5:
+				$score = __( 'Poor', 'wordpress-seo' );
+				$css   = 'poor';
+				break;
+			case 6:
+			case 7:
+				$score = __( 'OK', 'wordpress-seo' );
+				$css   = 'ok';
+				break;
+			case 8:
+			case 9:
+			case 10:
+				$score = __( 'Good', 'wordpress-seo' );
+				$css   = 'good';
+				break;
+			default:
+				$score = __( 'Bad', 'wordpress-seo' );
+				$css   = 'bad';
+				break;
 		}
 
-		return $seo_rank->get_label();
+		if ( $css_value ) {
+			return $css;
+		}
+		else {
+			return $score;
+		}
 	}
 
 	/**
@@ -204,7 +246,9 @@ class WPSEO_Utils {
 	 * remove line breaks, tabs and extra white space,
 	 * strip octets - BUT DO NOT REMOVE (part of) VARIABLES WHICH WILL BE REPLACED.
 	 *
-	 * @param string $value String value to sanitize.
+	 * @static
+	 *
+	 * @param string $value
 	 *
 	 * @return string
 	 */
@@ -250,8 +294,10 @@ class WPSEO_Utils {
 	 *
 	 * @todo [JRF => whomever] check/improve url verification
 	 *
-	 * @param string $value             String URL value to sanitize.
-	 * @param array  $allowed_protocols Optional set of allowed protocols.
+	 * @static
+	 *
+	 * @param string $value
+	 * @param array  $allowed_protocols
 	 *
 	 * @return string
 	 */
@@ -264,7 +310,7 @@ class WPSEO_Utils {
 	 *
 	 * @static
 	 *
-	 * @param mixed $value Value to validate.
+	 * @param mixed $value
 	 *
 	 * @return bool
 	 */
@@ -351,7 +397,7 @@ class WPSEO_Utils {
 	 *
 	 * @static
 	 *
-	 * @param mixed $value Value to validate.
+	 * @param mixed $value
 	 *
 	 * @return int|bool int or false in case of failure to convert to int
 	 */
@@ -425,6 +471,9 @@ class WPSEO_Utils {
 	/**
 	 * Flush W3TC cache after succesfull update/add of taxonomy meta option
 	 *
+	 * @todo [JRF => whomever] check the above and this function to see if they should be combined or really
+	 * do something significantly different
+	 *
 	 * @static
 	 */
 	public static function flush_w3tc_cache() {
@@ -440,6 +489,78 @@ class WPSEO_Utils {
 	 */
 	public static function clear_rewrites() {
 		delete_option( 'rewrite_rules' );
+	}
+
+	/**
+	 * Adds a hook that when given option is updated, the XML sitemap transient cache is cleared
+	 *
+	 * @param string $option
+	 * @param string $type
+	 */
+	public static function register_cache_clear_option( $option, $type = '' ) {
+		self::$cache_clear[ $option ] = $type;
+		add_action( 'update_option', array( 'WPSEO_Utils', 'clear_transient_cache' ) );
+	}
+
+	/**
+	 * Clears the transient cache when a given option is updated, if that option has been registered before
+	 *
+	 * @param string $option The option that's being updated.
+	 */
+	public static function clear_transient_cache( $option ) {
+		if ( isset( self::$cache_clear[ $option ] ) ) {
+			if ( '' !== self::$cache_clear[ $option ] ) {
+				wpseo_invalidate_sitemap_cache( self::$cache_clear[ $option ] );
+			}
+			else {
+				self::clear_sitemap_cache();
+			}
+		}
+	}
+
+	/**
+	 * Clear entire XML sitemap cache
+	 *
+	 * @param array $types
+	 */
+	public static function clear_sitemap_cache( $types = array() ) {
+		global $wpdb;
+
+		if ( wp_using_ext_object_cache() ) {
+			return;
+		}
+
+		if ( ! apply_filters( 'wpseo_enable_xml_sitemap_transient_caching', true ) ) {
+			return;
+		}
+
+		// Not sure about efficiency, but that's what code elsewhere does R.
+		$options = WPSEO_Options::get_all();
+
+		if ( true !== $options['enablexmlsitemap'] ) {
+			return;
+		}
+
+		$query = "DELETE FROM $wpdb->options WHERE";
+
+		if ( ! empty( $types ) ) {
+			$first = true;
+
+			foreach ( $types as $sitemap_type ) {
+				if ( ! $first ) {
+					$query .= ' OR ';
+				}
+
+				$query .= " option_name LIKE '_transient_wpseo_sitemap_cache_" . $sitemap_type . "_%' OR option_name LIKE '_transient_timeout_wpseo_sitemap_cache_" . $sitemap_type . "_%'";
+
+				$first = false;
+			}
+		}
+		else {
+			$query .= " option_name LIKE '_transient_wpseo_sitemap_%' OR option_name LIKE '_transient_timeout_wpseo_sitemap_%'";
+		}
+
+		$wpdb->query( $query );
 	}
 
 	/**
@@ -531,7 +652,7 @@ class WPSEO_Utils {
 			case 'mod':
 			case 'modulus':
 				if ( $bc ) {
-					$result = bcmod( $number1, $number2 ); // String, or NULL if modulus is 0.
+					$result = bcmod( $number1, $number2, $precision ); // String, or NULL if modulus is 0.
 				}
 				elseif ( $number2 != 0 ) {
 					$result = ( $number1 % $number2 );
@@ -575,9 +696,24 @@ class WPSEO_Utils {
 	}
 
 	/**
+	 * Wrapper for the PHP filter input function.
+	 *
+	 * This is used because stupidly enough, the `filter_input` function is not available on all hosts...
+	 *
+	 * @param int    $type
+	 * @param string $variable_name
+	 * @param int    $filter
+	 *
+	 * @return mixed
+	 */
+	public static function filter_input( $type, $variable_name, $filter = FILTER_DEFAULT ) {
+		return filter_input( $type, $variable_name, $filter );
+	}
+
+	/**
 	 * Trim whitespace and NBSP (Non-breaking space) from string
 	 *
-	 * @param string $string String input to trim.
+	 * @param string $string
 	 *
 	 * @return string
 	 */
@@ -592,7 +728,7 @@ class WPSEO_Utils {
 	/**
 	 * Check if a string is a valid datetime
 	 *
-	 * @param string $datetime String input to check as valid input for DateTime class.
+	 * @param string $datetime
 	 *
 	 * @return bool
 	 */
@@ -617,7 +753,7 @@ class WPSEO_Utils {
 	 *
 	 * This method will parse the URL and combine them in one string.
 	 *
-	 * @param string $url URL string.
+	 * @param string $url
 	 *
 	 * @return mixed
 	 */
@@ -646,9 +782,9 @@ class WPSEO_Utils {
 	/**
 	 * Get plugin name from file
 	 *
-	 * @param string $plugin Plugin path relative to plugins directory.
+	 * @param string $plugin
 	 *
-	 * @return string|bool
+	 * @return bool
 	 */
 	public static function get_plugin_name( $plugin ) {
 		$plugin_details = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
@@ -660,155 +796,4 @@ class WPSEO_Utils {
 		return false;
 	}
 
-	/**
-	 * Retrieves the sitename.
-	 *
-	 * @return string
-	 */
-	public static function get_site_name() {
-		return trim( strip_tags( get_bloginfo( 'name' ) ) );
-	}
-
-	/**
-	 * Retrieves the title separator.
-	 *
-	 * @return string
-	 */
-	public static function get_title_separator() {
-		$replacement = WPSEO_Options::get_default( 'wpseo_titles', 'separator' );
-
-		// Get the titles option and the separator options.
-		$titles_options    = WPSEO_Options::get_option( 'wpseo_titles' );
-		$seperator_options = WPSEO_Option_Titles::get_instance()->get_separator_options();
-
-		// This should always be set, but just to be sure.
-		if ( isset( $seperator_options[ $titles_options['separator'] ] ) ) {
-			// Set the new replacement.
-			$replacement = $seperator_options[ $titles_options['separator'] ];
-		}
-
-		/**
-		 * Filter: 'wpseo_replacements_filter_sep' - Allow customization of the separator character(s)
-		 *
-		 * @api string $replacement The current separator
-		 */
-		return apply_filters( 'wpseo_replacements_filter_sep', $replacement );
-	}
-
-	/**
-	 * Wrapper for encoding the array as a json string. Includes a fallback if wp_json_encode doesn't exists
-	 *
-	 * @param array $array_to_encode The array which will be encoded.
-	 * @param int   $options		 Optional. Array with options which will be passed in to the encoding methods.
-	 * @param int   $depth    		 Optional. Maximum depth to walk through $data. Must be greater than 0. Default 512.
-	 *
-	 * @return false|string
-	 */
-	public static function json_encode( array $array_to_encode, $options = 0, $depth = 512 ) {
-		if ( function_exists( 'wp_json_encode' ) ) {
-			return wp_json_encode( $array_to_encode, $options, $depth );
-		}
-
-		// @codingStandardsIgnoreStart
-		return json_encode( $array_to_encode );
-		// @codingStandardsIgnoreEnd
-	}
-
-	/**
-	 * Check if the current opened page is a Yoast SEO page.
-	 *
-	 * @return bool
-	 */
-	public static function is_yoast_seo_page() {
-		static $is_yoast_seo;
-
-		if ( $is_yoast_seo === null ) {
-			$current_page = filter_input( INPUT_GET, 'page' );
-			$is_yoast_seo = ( substr( $current_page, 0, 6 ) === 'wpseo_' );
-		}
-
-		return $is_yoast_seo;
-	}
-
-	/**
-	 * Determine if Yoast SEO is in development mode?
-	 *
-	 * Inspired by JetPack (https://github.com/Automattic/jetpack/blob/master/class.jetpack.php#L1383-L1406).
-	 *
-	 * @return bool
-	 */
-	public static function is_development_mode() {
-		$development_mode = false;
-
-		if ( defined( 'WPSEO_DEBUG' ) ) {
-			$development_mode = WPSEO_DEBUG;
-		}
-		elseif ( site_url() && false === strpos( site_url(), '.' ) ) {
-			$development_mode = true;
-		}
-
-		/**
-		 * Filter the Yoast SEO development mode.
-		 *
-		 * @since 3.0
-		 *
-		 * @param bool $development_mode Is Yoast SEOs development mode active.
-		 */
-
-		return apply_filters( 'yoast_seo_development_mode', $development_mode );
-	}
-
-	/**
-	 * Wrapper for the PHP filter input function.
-	 *
-	 * This is used because stupidly enough, the `filter_input` function is not available on all hosts...
-	 *
-	 * @deprecated Passes through to PHP call, no longer used in code.
-	 *
-	 * @param int    $type          Input type constant.
-	 * @param string $variable_name Variable name to get.
-	 * @param int    $filter        Filter to apply.
-	 *
-	 * @return mixed
-	 */
-	public static function filter_input( $type, $variable_name, $filter = FILTER_DEFAULT ) {
-		return filter_input( $type, $variable_name, $filter );
-	}
-
-	/**
-	 * Adds a hook that when given option is updated, the XML sitemap transient cache is cleared
-	 *
-	 * @deprecated
-	 * @see WPSEO_Sitemaps_Cache::register_clear_on_option_update()
-	 *
-	 * @param string $option Option name.
-	 * @param string $type   Sitemap type.
-	 */
-	public static function register_cache_clear_option( $option, $type = '' ) {
-		WPSEO_Sitemaps_Cache::register_clear_on_option_update( $option, $type );
-	}
-
-	/**
-	 * Clears the transient cache when a given option is updated, if that option has been registered before
-	 *
-	 * @deprecated
-	 * @see WPSEO_Sitemaps_Cache::clear_on_option_update()
-	 *
-	 * @param string $option The option that's being updated.
-	 */
-	public static function clear_transient_cache( $option ) {
-		WPSEO_Sitemaps_Cache::clear_on_option_update( $option );
-	}
-
-	/**
-	 * Clear entire XML sitemap cache
-	 *
-	 * @deprecated
-	 * @see WPSEO_Sitemaps_Cache::clear()
-	 *
-	 * @param array $types Set of sitemap types to invalidate cache for.
-	 */
-	public static function clear_sitemap_cache( $types = array() ) {
-		WPSEO_Sitemaps_Cache::clear( $types );
-	}
 } /* End of class WPSEO_Utils */
