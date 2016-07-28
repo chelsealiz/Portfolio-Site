@@ -130,9 +130,9 @@ class acf_field_google_map extends acf_field {
 	<div class="title acf-soh">
 		
 		<div class="actions acf-soh-target">
-			<a href="#" data-name="search" class="acf-icon acf-icon-search grey" title="<?php _e("Search", 'acf'); ?>"></a>
-			<a href="#" data-name="clear" class="acf-icon acf-icon-cancel grey" title="<?php _e("Clear location", 'acf'); ?>"></a>
-			<a href="#" data-name="locate" class="acf-icon acf-icon-location grey" title="<?php _e("Find current location", 'acf'); ?>"></a>
+			<a href="#" data-name="search" class="acf-icon -search grey" title="<?php _e("Search", 'acf'); ?>"></a>
+			<a href="#" data-name="clear" class="acf-icon -cancel grey" title="<?php _e("Clear location", 'acf'); ?>"></a>
+			<a href="#" data-name="locate" class="acf-icon -location grey" title="<?php _e("Find current location", 'acf'); ?>"></a>
 		</div>
 		
 		<input class="search" type="text" placeholder="<?php _e("Search for address...",'acf'); ?>" value="<?php echo $field['value']['address']; ?>" />
@@ -275,6 +275,47 @@ class acf_field_google_map extends acf_field {
 		// return
 		return $value;
 	}
+	
+	
+	/*
+   	*  input_admin_footer
+   	*
+   	*  description
+   	*
+   	*  @type	function
+   	*  @date	6/03/2014
+   	*  @since	5.0.0
+   	*
+   	*  @param	$post_id (int)
+   	*  @return	$post_id (int)
+   	*/
+   	
+   	function input_admin_footer() {
+	   	
+	   	// vars
+	   	$api = array(
+			'libraries'		=> 'places',
+			'key'			=> acf_get_setting('google_api_key'),
+			'client'		=> acf_get_setting('google_api_client')
+	   	);
+	   	
+	   	
+	   	// filter
+	   	$api = apply_filters('acf/fields/google_map/api', $api);
+	   	
+	   	
+	   	// remove empty
+	   	if( empty($api['key']) ) unset($api['key']);
+	   	if( empty($api['client']) ) unset($api['client']);
+	   	
+	   	
+?>
+<script type="text/javascript">
+acf.fields.google_map.api = <?php echo json_encode($api); ?>;
+</script>
+<?php
+	
+   	}
 }
 
 new acf_field_google_map();
