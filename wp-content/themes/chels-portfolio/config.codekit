@@ -14646,7 +14646,7 @@
 		},
 	"\/bower_components\/slick-carousel\/slick\/slick.min.js": {
 		"fileType": 64,
-		"ignore": 0,
+		"ignore": 1,
 		"ignoreWasSetByUser": 0,
 		"inputAbbreviatedPath": "\/bower_components\/slick-carousel\/slick\/slick.min.js",
 		"outputAbbreviatedPath": "\/bower_components\/slick-carousel\/slick\/min\/slick.min-min.js",
@@ -15155,6 +15155,15 @@
 		"outputPathIsOutsideProject": 0,
 		"outputPathIsSetByUser": 0
 		},
+	"\/page-full-width-slider.php": {
+		"fileType": 8192,
+		"ignore": 0,
+		"ignoreWasSetByUser": 0,
+		"inputAbbreviatedPath": "\/page-full-width-slider.php",
+		"outputAbbreviatedPath": "No Output Path",
+		"outputPathIsOutsideProject": 0,
+		"outputPathIsSetByUser": 0
+		},
 	"\/page-full-width.php": {
 		"fileType": 8192,
 		"ignore": 0,
@@ -15424,6 +15433,12 @@
 			"followForSyntaxChecking": 1,
 			"linkedFileAbbreviatedPath": "\/bower_components\/foundation\/js\/foundation\/foundation.interchange.js",
 			"position": 1,
+			"type": 0
+			},
+		{
+			"followForSyntaxChecking": 1,
+			"linkedFileAbbreviatedPath": "\/bower_components\/slick-carousel\/slick\/slick.min.js",
+			"position": 2,
 			"type": 0
 			}
 		]

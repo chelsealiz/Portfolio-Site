@@ -677,3 +677,74 @@ PLUGIN STYLES
     list-style: none outside none;
     margin: 0;
 }
+
+//Portfolio archive styling
+.portfolio-slider {
+
+	.portfolio-slide {
+
+		position:relative;
+
+		img {
+			width:100%;
+		}
+
+	}
+
+}
+
+//Slider Styles
+.slick-dots li button:before {
+	font-size:12px;
+}
+
+.slick-prev, .slick-next {
+	
+	&:before {
+		font-size: 45px;
+		color:#333;
+	}
+}
+
+
+.slick-prev {
+	left: -50px;
+}
+
+.archive-row-slider {
+	margin-left: -$column-gutter/2;
+	margin-right: -$column-gutter/2;
+}
+
+.archive-row-slide {
+	position: relative;
+	padding: $column-gutter/2;
+
+	&-inner {
+		border: 1px solid #cac8c8;
+		box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+	}
+
+	h3 {
+		font-size: rem-calc(18);
+		padding:0 $column-gutter/2;
+	}
+}
+
+.slick-next {
+
+}
+
+.portfolio-archive-slider {
+	margin-bottom:90px;
+}
+
+.link-cover {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: transparent;
+	z-index: 1;
+}

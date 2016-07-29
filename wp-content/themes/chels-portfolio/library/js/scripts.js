@@ -26,7 +26,35 @@ jQuery(document).ready(function($) {
     
 
 // add all your scripts here
-	
+	$('.portfolio-slider').slick({
+        dots : true, 
+        arrows : true, 
+    });
+
+    $('.archive-row-slider').slick({
+        dots : true, 
+        arrows : true,
+        slidesToShow : 3,
+        responsive: [
+            {
+              breakpoint : 1024,
+              settings : {
+                slidesToShow : 2,
+                arrows : false
+              }
+            },
+            {
+              breakpoint : 640,
+              settings : {
+                slidesToShow : 1,
+                arrows : false
+              }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ] 
+    });
  
 }); /* end of as page load scripts */
 

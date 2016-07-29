@@ -14,6 +14,8 @@ of the styles inside media queries.
  * 2. Prevent iOS and IE text size adjust after device orientation change,
  *    without disabling user zoom.
  */
+@import url(../../bower_components/slick-carousel/slick/slick.css);
+@import url(../../bower_components/slick-carousel/slick/slick-theme.css);
 html {
   font-family: sans-serif;
   /* 1 */
@@ -7486,6 +7488,47 @@ PLUGIN STYLES
 .gform_body ul {
   list-style: none outside none;
   margin: 0; }
+
+.portfolio-slider .portfolio-slide {
+  position: relative; }
+  .portfolio-slider .portfolio-slide img {
+    width: 100%; }
+
+.slick-dots li button:before {
+  font-size: 12px; }
+
+.slick-prev:before, .slick-next:before {
+  font-size: 45px;
+  color: #333; }
+
+.slick-prev {
+  left: -50px; }
+
+.archive-row-slider {
+  margin-left: -0.9375rem;
+  margin-right: -0.9375rem; }
+
+.archive-row-slide {
+  position: relative;
+  padding: 0.9375rem; }
+  .archive-row-slide-inner {
+    border: 1px solid #cac8c8;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); }
+  .archive-row-slide h3 {
+    font-size: 1.125rem;
+    padding: 0 0.9375rem; }
+
+.portfolio-archive-slider {
+  margin-bottom: 90px; }
+
+.link-cover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  z-index: 1; }
 
 /*
 MEDIUM

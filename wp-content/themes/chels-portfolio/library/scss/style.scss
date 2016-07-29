@@ -28,6 +28,10 @@ of the styles inside media queries.
 // foundation.scss
 @import "../../bower_components/foundation/scss/foundation";
 
+//import Slick Carosel
+@import "../../bower_components/slick-carousel/slick/slick.css"; 
+@import "../../bower_components/slick-carousel/slick/slick-theme.css";
+
 // joints.scss
 @import "joints";
 
