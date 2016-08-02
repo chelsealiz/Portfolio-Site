@@ -178,6 +178,8 @@ function vbtk_theme_support() {
 	// default thumb size
 	set_post_thumbnail_size(125, 125, true);
 
+	add_image_size('home-portfolio-small', '600', '', false);
+
 	// rss 
 	add_theme_support('automatic-feed-links');
 

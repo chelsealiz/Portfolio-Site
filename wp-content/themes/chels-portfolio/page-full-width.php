@@ -21,3 +21,4 @@ Template Name: Full Width (No Sidebar)
 			</div> <!-- end #content -->
 
 <?php get_footer(); ?>
+
