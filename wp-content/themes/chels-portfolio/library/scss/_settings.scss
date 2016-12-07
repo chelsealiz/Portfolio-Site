@@ -95,7 +95,7 @@ $include-html-global-classes: $include-html-classes;
 // $font-weight-normal: normal !default;
 // $font-weight-bold: bold !default;
 
-// $white       : #FFFFFF;
+$white       : #FFFFFF;
 // $ghost       : #FAFAFA;
 // $snow        : #F9F9F9;
 // $vapor       : #F6F6F6;
@@ -115,11 +115,11 @@ $include-html-global-classes: $include-html-classes;
 // $jet         : #222222;
 // $black       : #000000;
 
-$main_1: #466675; //Dark Grey
-$main_2: #6a8d9d; //Blue Grey
-$main_3: #cccccc; //Light Grey
-$accent_1: #fac8bf; //Apricot
-$accent_1: #94fffc; //Turquoise
+$main_1: #6e7376; //Dark Grey
+$main_2: $main_1; //Blue Grey
+$main_3: #4a8dac; //Light Grey
+$accent_1: #eeb6b7; //Apricot
+$accent_2: #99ced4; //Turquoise
 
 
 
@@ -814,7 +814,7 @@ $accent_1: #94fffc; //Turquoise
 
 // $include-html-off-canvas-classes: $include-html-classes;
 
-// $tabbar-bg: $oil;
+$tabbar-bg: $main_2 ;
 // $tabbar-height: rem-calc(45);
 // $tabbar-icon-width: $tabbar-height;
 // $tabbar-line-height: $tabbar-height;
@@ -833,7 +833,7 @@ $accent_1: #94fffc; //Turquoise
 
 // Off Canvas Menu Variables
 // $off-canvas-width: rem-calc(250);
-// $off-canvas-bg: $oil;
+$off-canvas-bg: $main_2;
 // $off-canvas-bg-hover: scale-color($tabbar-bg, $lightness: -30%);
 
 // Off Canvas Menu List Variables
@@ -875,7 +875,7 @@ $accent_1: #94fffc; //Turquoise
 // $off-canvas-overlay-transition: background 300ms ease;
 // $off-canvas-overlay-cursor: pointer;
 // $off-canvas-overlay-box-shadow: -4px 0 4px rgba($black, 0.5), 4px 0 4px rgba($black, 0.5);
-// $off-canvas-overlay-background: rgba($white, 0.2);
+$off-canvas-overlay-background: rgba($white, 0.4);
 // $off-canvas-overlay-background-hover: rgba($white, 0.05);
 
 // Transition Variables
@@ -1373,7 +1373,7 @@ $accent_1: #94fffc; //Turquoise
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-// $topbar-bg-color: $oil;
+$topbar-bg-color: $main_2;
 // $topbar-bg: $topbar-bg-color;
 
 // Height and margin

@@ -129,6 +129,13 @@ HEADER STYLES
 *********************/
 
 .header {
+
+	background:$main_3;
+
+	&-logo{
+		padding:0 $column-gutter/2;
+	}
+
 	ul.off-canvas-list li {
 		list-style: none;
 	}
@@ -138,10 +145,76 @@ HEADER STYLES
 NAVIGATION STYLES
 *********************/
 .top-bar {
+
+	background: $main_3;
+
 	.title-area {
 		z-index: 1;
 	}
+
+	&-section {
+
+		.title {
+			float:right;
+			font-size: rem-calc(16);
+    		margin-top: 11px;
+
+    		a { 
+    			color: $white;
+
+    			&:hover, &:focus {
+    				color: $accent_1;
+    			}
+
+    			&:active {
+    				background: $main_3;
+    			}
+    		}
+
+		}
+
+		
+
+	}
 } 
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+
+	background: $main_3;
+
+		&:active {
+
+			background: $main_3;
+
+		}
+
+		&:hover {
+
+			color: $accent_1;
+			background: $main_3;
+
+		}
+
+}
+
+.top-bar-section li.active:not(.has-form) a:not(.button) {
+
+	background: $main_3;
+
+		&:active {
+
+			background: $main_3;
+
+		}
+
+		&:hover {
+
+			color: $accent_1;
+			background: $main_3;
+
+		}
+
+}
 
 .off-canvas-list {
 	ul {
@@ -156,6 +229,22 @@ NAVIGATION STYLES
 		}
 	}
 }
+
+.left-small{
+	border-right:none; 
+}
+
+.tab-bar{
+	h1 {
+		a { 
+			color:$accent_2;
+
+			&:hover, &:focus {
+    				color: $accent_1;
+    		}
+		}
+	}
+} 
 
 /*********************
 POSTS & CONTENT STYLES

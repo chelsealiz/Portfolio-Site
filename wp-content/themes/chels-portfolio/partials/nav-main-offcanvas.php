@@ -7,6 +7,7 @@
 				</li>
 			</ul>		
 			<section class="top-bar-section">
+				<h1 class="title"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
 				<?php vbtk_main_nav(); ?>
 			</section>
 		</nav>
@@ -18,7 +19,7 @@
 	<div class="contain-to-grid">
 		<nav class="tab-bar">
 			<section class="middle tab-bar-section">
-				<h1 class="title"><?php bloginfo('name'); ?></h1>
+				<h1 class="title"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
 			</section>
 			<section class="left-small">
 				<a href="#" class="left-off-canvas-toggle menu-icon" ><span></span></a>
@@ -29,7 +30,6 @@
 						
 <aside class="left-off-canvas-menu show-for-small-only">
 	<ul class="off-canvas-list">
-		<li><label>Navigation</label></li>
 			<?php vbtk_main_nav(); ?>    
 	</ul>
 </aside>

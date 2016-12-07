@@ -179,6 +179,7 @@ function vbtk_theme_support() {
 	set_post_thumbnail_size(125, 125, true);
 
 	add_image_size('home-portfolio-small', '600', '', false);
+	add_image_size( 'slider-bg-lg', '1400', '505', true );
 
 	// rss 
 	add_theme_support('automatic-feed-links');

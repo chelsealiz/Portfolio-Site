@@ -3,16 +3,15 @@
 Template Name: Homepage
 */
 ?>
-
 <?php get_header(); ?>
-			
-			<div id="content">
-			
-				<div id="inner-content" class="row">
-			
-				    <div id="main" class="large-12 medium-12 columns" role="main">
-						
-						<section id="home-intro" class="">
+		<?php 
+			$thumb_id = get_field('header_pic');
+			$thumb_url_array = wp_get_attachment_image_src($thumb_id, 'slider-bg-lg', true);
+			$thumb_url = $thumb_url_array[0];
+		?>
+
+		<div class="" style="background-image: url(<?php echo $thumb_url; ?>);">
+			<section id="home-intro" class="">
 							<h1><?php the_field('page_title'); ?></h1>
 
 							<div class="home-intro-content">
@@ -20,6 +19,15 @@ Template Name: Homepage
 							</div>
 
 						</section>
+		</div>
+
+			<div id="content">
+			
+				<div id="inner-content" class="row">
+
+				    <div id="main" class="large-12 medium-12 columns" role="main">
+						
+						
 
 						<section id="home-portfolio" class="">
 							<h2><?php the_field('portfolio_section_title'); ?></h2>
@@ -36,7 +44,7 @@ Template Name: Homepage
 								<?php if ( $loop->have_posts() ) : ?>
 									<?php while ( $loop->have_posts() ) : $loop->the_post(); setup_postdata( $loop );  ?>
 									
-										<div class='portfolio-item columns small-1 medium-4'>
+										<div class='portfolio-item columns small-12 medium-4'>
 											<a href="<?php the_permalink() ; ?>"> 
 												<?php the_title(); ?>
 
