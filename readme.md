@@ -1,9 +1,6 @@
-# VBTK Starter Theme
+# Portfolio
 
 Based on http://jointswp.com/
-
-
-UPDATE 2/20/17: ACF is now being saved into files in the theme and we have disabled the ability to modify Custom Fields unless a constant is set in the config file. To allow this, add `define('WP_LOCAL',true);` to your local wp-config.php
 
 
 ## Installation:
@@ -21,7 +18,7 @@ npm install -g npm bower gulp
 Install all bower and npm modules. 
 
 ```
-cd /your-local-path-here/starter-theme-2015/wp-content/themes/vbtk-starter
+cd /your-local-path-here/local-folder/wp-content/themes/your-theme
 npm install
 bower install
 ```
@@ -29,7 +26,7 @@ bower install
 NOTE: `bower_components` and `node_modules` are NOT saved in the repository. There should be no need to do this.
 
 #### Step 3
-Setup your local URL for and database for this theme. Once you have a URL (ie: starter.dev), plug this into `starter-theme-2015/wp-content/themes/vbtk-starter/gulpfile.js`
+Setup your local URL for and database for this theme. Once you have a URL (ie: starter.dev), plug this into `local-folder/wp-content/themes/your-theme/gulpfile.js`
 
 ```
 var proxy_url = 'starter.dev';  // REPLACE THIS WITH YOUR LOCAL DEV URL
