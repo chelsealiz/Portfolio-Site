@@ -63,7 +63,7 @@ $black: #0a0a0a;
 $white: #fefefe;
 $body-background: $white;
 $body-font-color: $black;
-$body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+// $body-font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
 $body-antialiased: true;
 $global-margin: 1rem;
 $global-padding: 1rem;
@@ -75,6 +75,23 @@ $global-flexbox: false;
 $print-transparent-backgrounds: true;
 
 @include add-foundation-colors;
+
+
+$kavivana: 'kavivanarregular', Helvetica, Roboto, Arial, sans-serif;
+$r-bold: 'robotobold', Helvetica, Roboto, Arial, sans-serif;
+$r-bold-i: 'robotobold_italic', Helvetica, Roboto, Arial, sans-serif;
+$r-italic: 'robotoitalic', Helvetica, Roboto, Arial, sans-serif;
+$r-light: 'robotolight', Helvetica, Roboto, Arial, sans-serif;
+$r-light-i: 'robotolight_italic', Helvetica, Roboto, Arial, sans-serif;
+$r-med: 'robotomedium', Helvetica, Roboto, Arial, sans-serif;
+$r-med-i: 'robotomedium_italic', Helvetica, Roboto, Arial, sans-serif;
+$r-reg: 'robotoregular', Helvetica, Roboto, Arial, sans-serif;
+$r-thin: 'robotothin', Helvetica, Roboto, Arial, sans-serif;
+$r-thin-i: 'robotothin_italic', Helvetica, Roboto, Arial, sans-serif;
+
+
+$body-font-family: $r-reg;
+$header-font-family: $kavivana;
 
 // 2. Breakpoints
 // --------------
@@ -104,7 +121,7 @@ $block-grid-max: 8;
 // 4. Base Typography
 // ------------------
 
-$header-font-family: $body-font-family;
+// $header-font-family: $body-font-family;
 $header-font-weight: $global-weight-normal;
 $header-font-style: normal;
 $font-family-monospace: Consolas, 'Liberation Mono', Courier, monospace;
